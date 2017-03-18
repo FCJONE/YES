@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Domain.Concrete;
+using WebUI.Models;
 
 namespace WebUI.Controllers
 {
     public class AdminController : Controller
     {
         IBookRepository repository;
+        EFBookRepository EfBookRepository;
 
         public AdminController(IBookRepository repo)
         {
@@ -27,6 +30,13 @@ namespace WebUI.Controllers
             Book book = repository.Books.FirstOrDefault(b => b.BookId == bookId);
 
             return View(book);
+        }
+
+        public ViewResult Create()
+        {
+            //EfBookRepository efBookRepository = 
+
+            return View();
         }
 
         [HttpPost]
