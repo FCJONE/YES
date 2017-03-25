@@ -14,9 +14,7 @@ namespace Domain.Entities
 
         public void AddItem(Book book, int quantity)
         {
-            CartLine line = lineCollection
-                .Where(b => b.Book.BookId == book.BookId)
-                .FirstOrDefault();
+            CartLine line = lineCollection.FirstOrDefault(b => b.Book.BookId == book.BookId);
 
             if (line == null)
             {
