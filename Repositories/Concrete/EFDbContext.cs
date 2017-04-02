@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Repositories.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Concrete
+namespace Repositories.Concrete
 {
-    public class EFDbContext : DbContext
+    public class EfDbContext : DbContext
     {
         public DbSet<Book> Books { get; set; }
     }

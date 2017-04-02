@@ -1,34 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Repository
+namespace Repositories.Abstract
 {
-    public abstract class RepositoryBase<T> : IAbstractRepository<T> where T : class
+    public abstract class RepositoryBase<T> : IAbstractRepository<T>
     {
-        public IEnumerable<T> GetBookList()
+        public IEnumerable<T> GetEntitysList()
         {
             throw new NotImplementedException();
         }
 
-        public void Add(T book)
+        public short Add(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public void Delete(int id)
+        public short Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public void Save(T book)
+        public short Save(T entity)
         {
             throw new NotImplementedException();
         }
 
-        public T GetBook(int id)
+        public T GetEntity(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public short Update(T entity)
         {
             throw new NotImplementedException();
         }

@@ -1,13 +1,9 @@
-﻿using Domain.Abstract;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Repositories.Abstract;
 using System.Text;
-using System.Threading.Tasks;
 using System.Net;
 using System.Net.Mail;
 
-namespace Domain.Concrete
+namespace Repositories.Concrete
 {
     public class EmailSettings
     {
@@ -24,30 +20,30 @@ namespace Domain.Concrete
     
     public class EmailOrderProcessor : IOrderProcessor
     {
-        private EmailSettings emailSettings;
+        private readonly EmailSettings _emailSettings;
         public EmailOrderProcessor(EmailSettings settings)
         {
-            emailSettings = settings;
+            _emailSettings = settings;
         }
 
         public void ProcessOrder(Entities.Cart cart, Entities.ShippingDetails shippingDetails)
         {
             using (var smtpClient = new SmtpClient())
             {
-                smtpClient.EnableSsl = emailSettings.UseSsl;
-                smtpClient.Host = emailSettings.ServerName;
-                smtpClient.Port = emailSettings.ServerPort;
+                smtpClient.EnableSsl = _emailSettings.UseSsl;
+                smtpClient.Host = _emailSettings.ServerName;
+                smtpClient.Port = _emailSettings.ServerPort;
                 smtpClient.UseDefaultCredentials = false;
-                smtpClient.Credentials = new NetworkCredential(emailSettings.Username, emailSettings.Password);
+                smtpClient.Credentials = new NetworkCredential(_emailSettings.Username, _emailSettings.Password);
 
-                if (emailSettings.WriteAsFile)
+                if (_emailSettings.WriteAsFile)
                 {
                     smtpClient.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-                    smtpClient.PickupDirectoryLocation = emailSettings.FileLocation;
+                    smtpClient.PickupDirectoryLocation = _emailSettings.FileLocation;
                     smtpClient.EnableSsl = false;
                 }
 
-                StringBuilder body = new StringBuilder()
+                var body = new StringBuilder()
                 .AppendLine("Новый заказ обработан")
                 .AppendLine("---")
                 .AppendLine("Товары:");
@@ -70,14 +66,14 @@ namespace Domain.Concrete
                     .AppendLine("---")
                     .AppendFormat("Подарочная упаковка: {0}", shippingDetails.GiftWrap ? "Да" : "Нет");
 
-                MailMessage mailMessage = new MailMessage(
-                    emailSettings.MailFromAddress,
-                    emailSettings.MailToAddress,
+                var mailMessage = new MailMessage(
+                    _emailSettings.MailFromAddress,
+                    _emailSettings.MailToAddress,
                     "Новый заказ отправлен!",
                     body.ToString()
                     );
 
-                if (emailSettings.WriteAsFile)
+                if (_emailSettings.WriteAsFile)
                 {
                     mailMessage.BodyEncoding = Encoding.UTF8;
                 }

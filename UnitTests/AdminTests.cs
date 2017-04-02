@@ -1,5 +1,5 @@
-﻿using Domain.Abstract;
-using Domain.Entities;
+﻿using Repositories.Abstract;
+using Repositories.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;

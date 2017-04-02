@@ -1,4 +1,4 @@
-﻿@model Domain.Entities.ShippingDetails
+﻿@model Repository.Entities.ShippingDetails
 
 @{
     ViewBag.Title = "BookStore: форма заказа";
@@ -9,7 +9,7 @@
 
 @using (Html.BeginForm())
 {
-    @Html.ValidationSummary();
+    @Html.ValidationSummary()
     <h3>Данные</h3>
     <div class="form-group">
         <label>Ваше имя:</label>

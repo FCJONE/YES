@@ -1,6 +1,6 @@
-﻿using Domain.Abstract;
-using Domain.Concrete;
-using Domain.Entities;
+﻿using Repositories.Abstract;
+using Repositories.Concrete;
+using Repositories.Entities;
 using Moq;
 using Ninject;
 using System;
