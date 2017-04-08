@@ -1,12 +1,11 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using Repositories.Abstract;
 using System.Collections.Generic;
-using Repositories.Entities;
 using WebUI.Controllers;
 using System.Linq;
 using System.Web.Mvc;
+using Domain;
 using WebUI.Models;
 using WebUI.HtmlHelpers;
 

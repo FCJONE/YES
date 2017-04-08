@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
+using Domain.Common;
+using Repositories.Context;
 
 namespace Repositories.Abstract
 {
     public interface IAbstractRepository<T> : IDisposable
     {
-        IEnumerable<T> EntitiesList();
+        
+        IEnumerable<T> EntitiesList(EntityBase t);
 
         T GetEntity(int id);
 
@@ -18,7 +22,5 @@ namespace Repositories.Abstract
         void Update(T entity);
 
         void Dispose(bool disposing);
-
-        new void Dispose();
     }
 }

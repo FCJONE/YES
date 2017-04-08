@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Repositories.Entities;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +6,7 @@ using Moq;
 using Repositories.Abstract;
 using WebUI.Controllers;
 using System.Web.Mvc;
+using Domain;
 using WebUI.Models;
 
 namespace UnitTests

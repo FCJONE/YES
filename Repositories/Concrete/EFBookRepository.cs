@@ -1,19 +1,20 @@
 ﻿using Repositories.Abstract;
 using Repositories.Entities;
-using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using Domain;
+using Repositories.Context;
 
 namespace Repositories.Concrete
 {
     public class EfBookRepository : BaseRepository<Book>
     {
 
-        private readonly BookContext _bookRepository;
+        private readonly EfDbContext _efBookContext;
 
-        public EfBookRepository(BookContext repo)
+        public EfBookRepository(EfDbContext efBookContext)
         {
-            _bookRepository = repo;
+            _efBookContext = efBookContext;
         }
 
 
@@ -25,11 +26,11 @@ namespace Repositories.Concrete
         {
             if (book.BookId == 0)
             {
-                _bookRepository.Entities.Add(book);
+                _efBookContext.Books.Add(book);
             }
             else
             {
-                var dbEntry = _bookRepository.Entities.Find(book.BookId);
+                var dbEntry = _efBookContext.Books.Find(book.BookId);
                 if (dbEntry != null)
                 {
                     dbEntry.Name = book.Name;
@@ -39,7 +40,7 @@ namespace Repositories.Concrete
                     dbEntry.Price = book.Price;
                 }
             }
-            _bookRepository.SaveChanges();
+            _efBookContext.SaveChanges();
         }
 
 

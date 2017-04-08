@@ -1,10 +1,8 @@
 ﻿using Repositories.Abstract;
 using Repositories.Entities;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using Domain;
 using Repositories.Concrete;
 using WebUI.Models;
 
@@ -32,7 +30,7 @@ namespace WebUI.Controllers
 
         public RedirectToRouteResult AddToCart(Cart cart,int bookId, string returnUrl)
         {
-            Book book = _repository.Сontext.Entities
+            Book book = _repository.Сontext
                 .FirstOrDefault(b => b.BookId == bookId);
 
             if (book != null)

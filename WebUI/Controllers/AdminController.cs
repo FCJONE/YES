@@ -2,6 +2,7 @@
 using Repositories.Abstract;
 using Repositories.Concrete;
 using System.Web.Mvc;
+using Domain;
 using Repositories.Entities;
 
 namespace WebUI.Controllers
@@ -17,12 +18,12 @@ namespace WebUI.Controllers
 
         public ViewResult Index()
         {
-            return View(_repository.Сontext.Entities);
+            return View(_repository.Сontext);
         }
 
         public ViewResult Edit(int bookId)
         {
-            var book = _repository.Сontext.Entities.FirstOrDefault(b => b.BookId == bookId);
+            var book = _repository.Сontext.FirstOrDefault(b => b.BookId == bookId);
 
             return View(book);
         }

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using Domain.Common;
 
-
-namespace Repositories.Entities
+namespace Domain
 {
-    public class Book
+    public class Book : EntityBase
     {
         [HiddenInput(DisplayValue=false)]
         [Display(Name = "ID")]

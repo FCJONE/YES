@@ -1,35 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using Repositories.Concrete;
+using Domain.Common;
+using Repositories.Context;
 
 namespace Repositories.Abstract
 {
-    public abstract class BaseRepository<T> : IAbstractRepository<T> where T : class
+    public abstract class BaseRepository<T> :  IAbstractRepository<T> where T : EntityBase
     {
-        public BaseDbContext<T> Сontext;
+        public EfDbContext Сontext;
 
-
-        public IEnumerable<T> EntitiesList()
+        protected BaseRepository(EfDbContext context)
         {
-            return Сontext.Entities;
+            Context = context;
+        }
+
+        public IEnumerable<T> EntitiesList(EntityBase t)
+        {
+            return null;
         }
 
         public T GetEntity(int id)
         {
-            return Сontext.Entities.Find(id);
+            return Сontext.Find(id);
         }
 
         public void Add(T entity)
         {
-            Сontext.Entities.Add(entity);
+            Сontext.Add(entity);
         }
 
         public void Delete(int id)
         {
-            var entitiy = Сontext.Entities.Find(id);
+            var entitiy = Сontext.Find(id);
             if (entitiy != null)
-                Сontext.Entities.Remove(entitiy);
+                Сontext.Remove(entitiy);
         }
 
         public void Save(T entity)
