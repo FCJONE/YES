@@ -4,40 +4,42 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Repositories.Concrete;
 using WebUI.Models;
 
 namespace WebUI.Controllers
 {
     public class BooksController : Controller
     {
-        private IBookRepository repository;
-        public int pageSize = 4;
+        private readonly EfBookRepository _repository;
+        public int PageSize = 4;
 
-        public BooksController(IBookRepository repo)
+        public BooksController(EfBookRepository repo)
         {
-            repository = repo;
+            _repository = repo;
         }
+
 
         public ViewResult List(string genre, int page = 1)
         {
-            BooksListViewModel model = new BooksListViewModel
+            var model = new BooksListViewModel
             {
-                Books = repository.Books
+                Books = _repository.EntitiesList()
                 .Where(b => genre == null || b.Genre == genre)
                 .OrderBy(book => book.BookId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize),
+                .Skip((page - 1) * PageSize)
+                .Take(PageSize),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
-                    ItemsPerPage = pageSize,
-                    TotalItems = genre == null ? 
-                        repository.Books.Count() : 
-                        repository.Books.Where(book => book.Genre == genre).Count()
+                    ItemsPerPage = PageSize,
+                    TotalItems = genre == null ?
+                        _repository.Сontext.Entities.Count() :
+                        _repository.Сontext.Entities.Count(book => book.Genre == genre)
                 },
                 CurrentGenre = genre
             };
-            
+
             return View(model);
         }
     }

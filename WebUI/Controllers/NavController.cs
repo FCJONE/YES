@@ -4,28 +4,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Repositories.Concrete;
 
 namespace WebUI.Controllers
 {
     public class NavController : Controller
     {
-        private IBookRepository repository;
+        private readonly EfBookRepository _repository;
 
-        public NavController(IBookRepository repo)
+        public NavController(EfBookRepository repo)
         {
-            repository = repo;
+            _repository = repo;
         }
-        
+
         public PartialViewResult Menu(string genre = null)
         {
             ViewBag.SelectedGenre = genre;
 
-            IEnumerable<string> genres = repository.Books
+            IEnumerable<string> genres = _repository.Сontext.Entities
                 .Select(book => book.Genre)
                 .Distinct()
                 .OrderBy(x => x);
-            
-            return PartialView("FlexMenu",genres);
+
+            return PartialView("FlexMenu", genres);
         }
     }
 }

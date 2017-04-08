@@ -2,24 +2,34 @@
 using Repositories.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 
 namespace Repositories.Concrete
 {
-    public class EfBookRepository : RepositoryBase<Book>
+    public class EfBookRepository : BaseRepository<Book>
     {
-        readonly EfDbContext _context = new EfDbContext();
-        public IEnumerable<Book> Books => _context.Books; //On Books{get;} _context.books returned
+
+        private readonly BookContext _bookRepository;
+
+        public EfBookRepository(BookContext repo)
+        {
+            _bookRepository = repo;
+        }
 
 
+        /// <summary>
+        /// Ну хр его знает, что это такое
+        /// </summary>
+        /// <param name="book"></param>
         public void SaveBook(Book book)
         {
             if (book.BookId == 0)
             {
-                _context.Books.Add(book);
+                _bookRepository.Entities.Add(book);
             }
             else
             {
-                var dbEntry = _context.Books.Find(book.BookId);
+                var dbEntry = _bookRepository.Entities.Find(book.BookId);
                 if (dbEntry != null)
                 {
                     dbEntry.Name = book.Name;
@@ -29,32 +39,31 @@ namespace Repositories.Concrete
                     dbEntry.Price = book.Price;
                 }
             }
-            _context.SaveChanges();
+            _bookRepository.SaveChanges();
         }
 
-        public new IEnumerable<Book> GetEntitysList()
+
+        public IEnumerable<Book> GetEntitysList()
         {
-            throw new NotImplementedException();
+            return EntitiesList();
         }
 
-        public new void Add(Book entity)
+
+        public void AddBook(Book entity)
         {
-            throw new NotImplementedException();
+            Add(entity);
         }
 
-        public new void Delete(int id)
+
+        public void DeleteBook(int id)
         {
-            throw new NotImplementedException();
+            Delete(id);
         }
 
-        public new void Save(Book entity)
-        {
-            throw new NotImplementedException();
-        }
 
-        public new Book GetEntity(int id)
+        public Book GetBook(int id)
         {
-            throw new NotImplementedException();
+            return GetEntity(id);
         }
     }
 }

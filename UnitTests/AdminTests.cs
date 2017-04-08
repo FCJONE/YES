@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Repositories.Concrete;
 using WebUI.Controllers;
 
 namespace UnitTests
@@ -19,8 +20,8 @@ namespace UnitTests
         public void Index_Contains_All_Books()
         {
             // Организация (arrange)
-            Mock<IBookRepository> mock = new Mock<IBookRepository>();
-            mock.Setup(m => m.Books).Returns(new List<Book>
+            Mock<EfBookRepository> mock = new Mock<EfBookRepository>();
+            mock.Setup(m => m.Сontext.Entities).Returns(new List<Book>
             {
                 new Book{BookId = 1, Name = "Book1"},
                 new Book{BookId = 2, Name = "Book2"},

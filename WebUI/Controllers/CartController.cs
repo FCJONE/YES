@@ -5,19 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Repositories.Concrete;
 using WebUI.Models;
 
 namespace WebUI.Controllers
 {
     public class CartController : Controller
     {
-        private IBookRepository repository;
-        private IOrderProcessor orderProcessor;
+        private readonly EfBookRepository _repository;
+        private readonly IOrderProcessor _orderProcessor;
 
-        public CartController(IBookRepository repo, IOrderProcessor processor)
+        public CartController(EfBookRepository repo, IOrderProcessor processor)
         {
-            repository = repo;
-            orderProcessor = processor;
+            _repository = repo;
+            _orderProcessor = processor;
         }
 
         public ViewResult Index(Cart cart,string returnUrl)
@@ -31,7 +32,7 @@ namespace WebUI.Controllers
 
         public RedirectToRouteResult AddToCart(Cart cart,int bookId, string returnUrl)
         {
-            Book book = repository.Books
+            Book book = _repository.Сontext.Entities
                 .FirstOrDefault(b => b.BookId == bookId);
 
             if (book != null)
@@ -44,7 +45,7 @@ namespace WebUI.Controllers
 
         public RedirectToRouteResult RemoveFromCart(Cart cart, int bookId, string returnUrl)
         {
-            Book book = repository.Books
+            Book book = _repository.Сontext.Entities
                 .FirstOrDefault(b => b.BookId == bookId);
 
             if (book != null)
@@ -68,22 +69,19 @@ namespace WebUI.Controllers
         [HttpPost]
         public ViewResult Checkout(Cart cart, ShippingDetails shippingDetails)
         {
-            if (cart.Lines.Count() == 0)
+            if (!cart.Lines.Any())
             {
                 ModelState.AddModelError("", "Извините, корзина пуста!");
             }
 
             if (ModelState.IsValid)
             {
-                orderProcessor.ProcessOrder(cart, shippingDetails);
+                _orderProcessor.ProcessOrder(cart, shippingDetails);
                 cart.Clear();
                 return View("Completed");
             }
-            else
-            {
-                return View(new ShippingDetails());
-            }
+            return View(new ShippingDetails());
         }
-        
+
     }
 }

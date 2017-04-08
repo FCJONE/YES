@@ -30,7 +30,7 @@ namespace UnitTests
             });
 
             BooksController controller = new BooksController(mock.Object);
-            controller.pageSize = 3;
+            controller.PageSize = 3;
 
             // Действие (act)
             BooksListViewModel result = (BooksListViewModel)controller.List(null,2).Model;
@@ -80,7 +80,7 @@ namespace UnitTests
             });
 
             BooksController controller = new BooksController(mock.Object);
-            controller.pageSize = 3;
+            controller.PageSize = 3;
 
             // Действие (act)
             BooksListViewModel result = (BooksListViewModel)controller.List(null,2).Model;
@@ -107,7 +107,7 @@ namespace UnitTests
             });
 
             BooksController controller = new BooksController(mock.Object);
-            controller.pageSize = 3;
+            controller.PageSize = 3;
 
             // Действие (act)
             List<Book> result = ((BooksListViewModel)controller.List("Genre2", 1).Model).Books.ToList();
@@ -181,7 +181,7 @@ namespace UnitTests
             });
 
             BooksController controller = new BooksController(mock.Object);
-            controller.pageSize = 3;
+            controller.PageSize = 3;
 
             int res1 = ((BooksListViewModel)controller.List("Genre1").Model).PagingInfo.TotalItems;
             int res2 = ((BooksListViewModel)controller.List("Genre2").Model).PagingInfo.TotalItems;
